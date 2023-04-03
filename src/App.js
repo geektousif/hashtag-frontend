@@ -1,24 +1,57 @@
-import logo from './logo.svg';
-import './App.css';
+import { Route, Routes } from "react-router-dom";
+import Header from "./components/Header";
+import ProtectedRoutes from "./components/admin/ProtectedRoutes";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import ProductPage from "./pages/ProductPage";
+import CartPage from "./pages/CartPage";
+import AdminHome from "./pages/admin/Home";
+
+import "react-toastify/dist/ReactToastify.css";
+import Products from "./pages/admin/Products";
+import MultipleImages from "./pages/admin/MultipleImages";
+import UpdateProfile from "./pages/UpdateProfile";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Header />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/productPage/:id" element={<ProductPage />} />
+        <Route path="/cart" element={<CartPage />} />
+        <Route path="/updateProfile" element={<UpdateProfile />} />
+
+        {/* TODO: PROTECT ADMIN ROUTES */}
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoutes>
+              <AdminHome />
+            </ProtectedRoutes>
+          }
+        />
+        <Route
+          path="/admin/products"
+          element={
+            <ProtectedRoutes>
+              <Products />
+            </ProtectedRoutes>
+          }
+        />
+        <Route
+          path="/admin/products/:id/images"
+          element={
+            <ProtectedRoutes>
+              <MultipleImages />
+            </ProtectedRoutes>
+          }
+        />
+      </Routes>
+    </>
   );
 }
 
